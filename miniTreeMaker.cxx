@@ -7,6 +7,9 @@
 #include "TSystem.h"
 #include "TTreeReaderValue.h"
 
+struct MCp {
+    float status, px, py, pz, mass;
+};
 
 struct Particle {
     float px, py, pz, charge;
@@ -29,7 +32,8 @@ struct Hit_OMD {
 };
 
 struct Event {
-    Int_t nParticles;
+    Int_t nParticles, nMCParticles;
+    std::vector<MCp> mcp;
     std::vector<Particle> particles;
     std::vector<Cluster_EEMC> clusters_eemc;
     std::vector<Cluster_ZDC> clusters_zdc;
@@ -99,11 +103,24 @@ tree_reader.SetEntriesRange(0, tree->GetEntries());
 while (tree_reader.Next()) {
 
 	int numberOfChargedParticles=0;
+	int numberOfMCParticles=0;
+	event.mcp.Clear();
   event.particles.clear();
   event.clusters_eemc.clear();
   event.clusters_zdc.clear();
   event.hit_rp.clear();
   event.hit_omd.clear();
+
+  for(int imc=0;imc<mc_px_array.GetSize();imc++){
+  	MCp mc;
+  	mc.status = mc_genStatus_array[imc];
+  	mc.px = mc_px_array[imc];
+  	mc.py = mc_py_array[imc];
+  	mc.pz = mc_pz_array[imc];
+  	mc.mass = mc_mass_array[imc];
+  	event.mcp.push_back(mc);
+  	numberOfMCParticles++;
+  }
 
   for(int itrk=0;itrk<reco_pz_array.GetSize();itrk++){
   	Particle p;
@@ -143,6 +160,7 @@ while (tree_reader.Next()) {
 	}
 
   event.nParticles=numberOfChargedParticles;
+  event.nMCParticles=numberOfMCParticles;
 	outputTree->Fill();
 }
 
