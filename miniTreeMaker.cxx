@@ -16,10 +16,25 @@ struct Cluster_EEMC {
     float x, y, energy;
 };
 
+struct Cluster_ZDC {
+    float x, y, z, energy;
+};
+
+struct Hit_RP {
+    float x, y, z;
+};
+
+struct Hit_OMD {
+    float x, y, z;
+};
+
 struct Event {
     Int_t nParticles;
     std::vector<Particle> particles;
     std::vector<Cluster_EEMC> clusters_eemc;
+    std::vector<Cluster_ZDC> clusters_zdc;
+    std::vector<Hit_RP> hit_rp;
+    std::vector<Hit_OMD> hit_omd;
 };
 
 int miniTreeMaker(TString rec_file, TString outputfile)
@@ -41,20 +56,28 @@ TTreeReaderArray<double> mc_pz_array = {tree_reader, "MCParticles.momentum.z"};
 TTreeReaderArray<double> mc_mass_array = {tree_reader, "MCParticles.mass"};
 TTreeReaderArray<int> mc_pdg_array = {tree_reader, "MCParticles.PDG"};
 
-// //InclusiveKinematicsElectron
-// TTreeReaderValue<float> inclusive_Q2_value(tree_reader, "InclusiveKinematicsElectron.Q2");
-// TTreeReaderValue<float> inclusive_x_value(tree_reader, "InclusiveKinematicsElectron.x");
-// TTreeReaderValue<float> inclusive_y_value(tree_reader, "InclusiveKinematicsElectron.y");
-
 //Reconstructed EcalEndcapNClusters
 TTreeReaderArray<float> em_energy_array = {tree_reader, "EcalEndcapNClusters.energy"};
 TTreeReaderArray<float> em_x_array = {tree_reader, "EcalEndcapNClusters.position.x"};
 TTreeReaderArray<float> em_y_array = {tree_reader, "EcalEndcapNClusters.position.y"};
-TTreeReaderArray<float> emhits_x_array = {tree_reader, "EcalEndcapNRecHits.position.x"};
-TTreeReaderArray<float> emhits_y_array = {tree_reader, "EcalEndcapNRecHits.position.y"};
-TTreeReaderArray<float> emhits_energy_array = {tree_reader, "EcalEndcapNRecHits.energy"};
 
-// Reconstructed Truth Seeded Charged particles has all central + B0 tracks
+//ReconstructedFarForwardZDCNeutrals 
+TTreeReaderArray<float> zdc_x_array = {tree_reader, "ReconstructedFarForwardZDCNeutrals.referencePoint.x"};
+TTreeReaderArray<float> zdc_y_array = {tree_reader, "ReconstructedFarForwardZDCNeutrals.referencePoint.y"};
+TTreeReaderArray<float> zdc_z_array = {tree_reader, "ReconstructedFarForwardZDCNeutrals.referencePoint.z"};
+TTreeReaderArray<float> zdc_energy_array = {tree_reader, "ReconstructedFarForwardZDCNeutrals.energy"};
+
+//ForwardRomanPotRecHits
+TTreeReaderArray<float> rp_x_array = {tree_reader, "ForwardRomanPotRecHits.position.x"};
+TTreeReaderArray<float> rp_y_array = {tree_reader, "ForwardRomanPotRecHits.position.y"};
+TTreeReaderArray<float> rp_z_array = {tree_reader, "ForwardRomanPotRecHits.position.z"};
+
+//ForwardOffMTrackerRecHits
+TTreeReaderArray<float> omd_x_array = {tree_reader, "ForwardOffMTrackerRecHits.position.x"};
+TTreeReaderArray<float> omd_y_array = {tree_reader, "ForwardOffMTrackerRecHits.position.y"};
+TTreeReaderArray<float> omd_z_array = {tree_reader, "ForwardOffMTrackerRecHits.position.z"};
+
+//Reconstructed all central + B0 tracks
 TTreeReaderArray<float> reco_px_array = {tree_reader, "ReconstructedTruthSeededChargedParticles.momentum.x"};
 TTreeReaderArray<float> reco_py_array = {tree_reader, "ReconstructedTruthSeededChargedParticles.momentum.y"};
 TTreeReaderArray<float> reco_pz_array = {tree_reader, "ReconstructedTruthSeededChargedParticles.momentum.z"};
@@ -78,6 +101,9 @@ while (tree_reader.Next()) {
 	int numberOfChargedParticles=0;
   event.particles.clear();
   event.clusters_eemc.clear();
+  event.clusters_zdc.clear();
+  event.hit_rp.clear();
+  event.hit_omd.clear();
 
   for(int itrk=0;itrk<reco_pz_array.GetSize();itrk++){
   	Particle p;
@@ -89,6 +115,7 @@ while (tree_reader.Next()) {
     numberOfChargedParticles++;
   }
 
+  //EEMC
   for(int iclus=0;iclus<em_energy_array.GetSize();iclus++){
   		Cluster_EEMC cluster;
 			cluster.energy=em_energy_array[iclus];
@@ -97,6 +124,23 @@ while (tree_reader.Next()) {
 	    event.clusters_eemc.push_back(cluster);
 	}
 
+	//RP
+	for(int ihit=0;ihit<rp_x_array.GetSize();ihit++){
+  		Hit_RP hit;
+			hit.x=rp_x_array[iclus];
+			hit.y=rp_y_array[iclus];
+			hit.z=rp_z_array[iclus];
+	    event.hit_rp.push_back(hit);
+	}
+
+	//OMD
+	for(int ihit=0;ihit<omd_x_array.GetSize();ihit++){
+  		Hit_OMD hit;
+			hit.x=omd_x_array[iclus];
+			hit.y=omd_y_array[iclus];
+			hit.z=omd_z_array[iclus];
+	    event.hit_omd.push_back(hit);
+	}
 
   event.nParticles=numberOfChargedParticles;
 	outputTree->Fill();
