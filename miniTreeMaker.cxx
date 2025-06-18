@@ -44,9 +44,9 @@ TTreeReaderArray<double> mc_mass_array = {tree_reader, "MCParticles.mass"};
 TTreeReaderArray<int> mc_pdg_array = {tree_reader, "MCParticles.PDG"};
 
 //InclusiveKinematicsElectron
-TTreeReaderValue<float> inclusive_Q2_value = {tree_reader, "InclusiveKinematicsElectron.Q2"};
-TTreeReaderValue<float> inclusive_x_value = {tree_reader, "InclusiveKinematicsElectron.x"};
-TTreeReaderValue<float> inclusive_y_value = {tree_reader, "InclusiveKinematicsElectron.y"};
+TTreeReaderValue<float> inclusive_Q2_value{tree_reader, "InclusiveKinematicsElectron.Q2"};
+TTreeReaderValue<float> inclusive_x_value{tree_reader, "InclusiveKinematicsElectron.x"};
+TTreeReaderValue<float> inclusive_y_value{tree_reader, "InclusiveKinematicsElectron.y"};
 
 //Reconstructed EcalEndcapNClusters
 TTreeReaderArray<float> em_energy_array = {tree_reader, "EcalEndcapNClusters.energy"};
