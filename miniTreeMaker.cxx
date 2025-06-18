@@ -1,11 +1,4 @@
 #include "pleaseIncludeMe.h"
-#include <TVector3.h>
-#include <TVector.h>
-#include <cmath>
-#include "TF1.h"
-#include "TF2.h"
-#include "TSystem.h"
-#include "TTreeReaderValue.h"
 
 struct MCp {
     float status, px, py, pz, mass;
@@ -44,7 +37,6 @@ struct Event {
 int miniTreeMaker(TString rec_file, TString outputfile, int doMC_=0)
 {	
 
-    
 TString name_of_input = (TString) rec_file;
 std::cout << "Input file = " << name_of_input << endl;
 auto tree = new TChain("events");
