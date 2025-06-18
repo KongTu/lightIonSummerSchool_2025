@@ -127,18 +127,18 @@ while (tree_reader.Next()) {
 	//RP
 	for(int ihit=0;ihit<rp_x_array.GetSize();ihit++){
   		Hit_RP hit;
-			hit.x=rp_x_array[iclus];
-			hit.y=rp_y_array[iclus];
-			hit.z=rp_z_array[iclus];
+			hit.x=rp_x_array[ihit];
+			hit.y=rp_y_array[ihit];
+			hit.z=rp_z_array[ihit];
 	    event.hit_rp.push_back(hit);
 	}
 
 	//OMD
 	for(int ihit=0;ihit<omd_x_array.GetSize();ihit++){
   		Hit_OMD hit;
-			hit.x=omd_x_array[iclus];
-			hit.y=omd_y_array[iclus];
-			hit.z=omd_z_array[iclus];
+			hit.x=omd_x_array[ihit];
+			hit.y=omd_y_array[ihit];
+			hit.z=omd_z_array[ihit];
 	    event.hit_omd.push_back(hit);
 	}
 
