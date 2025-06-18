@@ -41,7 +41,7 @@ struct Event {
     std::vector<Hit_OMD> hit_omd;
 };
 
-int miniTreeMaker(TString rec_file, TString outputfile)
+int miniTreeMaker(TString rec_file, TString outputfile, int doMC_=0)
 {	
 
     
@@ -111,16 +111,18 @@ while (tree_reader.Next()) {
   event.hit_rp.clear();
   event.hit_omd.clear();
 
-  for(int imc=0;imc<mc_px_array.GetSize();imc++){
-  	MCp mc;
-  	mc.status = mc_genStatus_array[imc];
-  	mc.px = mc_px_array[imc];
-  	mc.py = mc_py_array[imc];
-  	mc.pz = mc_pz_array[imc];
-  	mc.mass = mc_mass_array[imc];
-  	event.mcp.push_back(mc);
-  	numberOfMCParticles++;
-  }
+  if(doMC_){
+	  for(int imc=0;imc<mc_px_array.GetSize();imc++){
+	  	MCp mc;
+	  	mc.status = mc_genStatus_array[imc];
+	  	mc.px = mc_px_array[imc];
+	  	mc.py = mc_py_array[imc];
+	  	mc.pz = mc_pz_array[imc];
+	  	mc.mass = mc_mass_array[imc];
+	  	event.mcp.push_back(mc);
+	  	numberOfMCParticles++;
+	  }
+	}
 
   for(int itrk=0;itrk<reco_pz_array.GetSize();itrk++){
   	Particle p;
