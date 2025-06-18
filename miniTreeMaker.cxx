@@ -44,9 +44,9 @@ TTreeReaderArray<double> mc_mass_array = {tree_reader, "MCParticles.mass"};
 TTreeReaderArray<int> mc_pdg_array = {tree_reader, "MCParticles.PDG"};
 
 //InclusiveKinematicsElectron
-TTreeReaderArray<float> inclusive_Q2_value = {tree_reader, "InclusiveKinematicsElectron.Q2"};
-TTreeReaderArray<float> inclusive_x_value = {tree_reader, "InclusiveKinematicsElectron.x"};
-TTreeReaderArray<float> inclusive_y_value = {tree_reader, "InclusiveKinematicsElectron.y"};
+TTreeReaderValue<float> inclusive_Q2_value = {tree_reader, "InclusiveKinematicsElectron.Q2"};
+TTreeReaderValue<float> inclusive_x_value = {tree_reader, "InclusiveKinematicsElectron.x"};
+TTreeReaderValue<float> inclusive_y_value = {tree_reader, "InclusiveKinematicsElectron.y"};
 
 //Reconstructed EcalEndcapNClusters
 TTreeReaderArray<float> em_energy_array = {tree_reader, "EcalEndcapNClusters.energy"};
@@ -85,10 +85,10 @@ tree_reader.SetEntriesRange(0, tree->GetEntries());
 while (tree_reader.Next()) {
 
 	// if(inclusive_Q2_value.GetSize()<=0) continue;
-	// cout << "value " <<inclusive_Q2_value[0]<<endl;
-	// event.Q2_e = inclusive_Q2_value[0];
-  // event.x_e = inclusive_x_value[0];
-  // event.y_e = inclusive_y_value[0];
+	cout << "value " <<inclusive_Q2_value<<endl;
+	event.Q2_e = inclusive_Q2_value;
+  event.x_e = inclusive_x_value;
+  event.y_e = inclusive_y_value;
   event.particles.clear();
   event.clusters.clear();
 
