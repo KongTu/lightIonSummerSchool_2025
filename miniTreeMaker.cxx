@@ -18,8 +18,7 @@ struct Cluster {
 };
 
 struct Event {
-    Int_t event_id;
-    float Q2_e, x_e, y_e;
+    Int_t nParticles;
     std::vector<Particle> particles;
     std::vector<Cluster> clusters;
 };
@@ -43,10 +42,10 @@ TTreeReaderArray<double> mc_pz_array = {tree_reader, "MCParticles.momentum.z"};
 TTreeReaderArray<double> mc_mass_array = {tree_reader, "MCParticles.mass"};
 TTreeReaderArray<int> mc_pdg_array = {tree_reader, "MCParticles.PDG"};
 
-//InclusiveKinematicsElectron
-TTreeReaderValue<float> inclusive_Q2_value(tree_reader, "InclusiveKinematicsElectron.Q2");
-TTreeReaderValue<float> inclusive_x_value(tree_reader, "InclusiveKinematicsElectron.x");
-TTreeReaderValue<float> inclusive_y_value(tree_reader, "InclusiveKinematicsElectron.y");
+// //InclusiveKinematicsElectron
+// TTreeReaderValue<float> inclusive_Q2_value(tree_reader, "InclusiveKinematicsElectron.Q2");
+// TTreeReaderValue<float> inclusive_x_value(tree_reader, "InclusiveKinematicsElectron.x");
+// TTreeReaderValue<float> inclusive_y_value(tree_reader, "InclusiveKinematicsElectron.y");
 
 //Reconstructed EcalEndcapNClusters
 TTreeReaderArray<float> em_energy_array = {tree_reader, "EcalEndcapNClusters.energy"};
@@ -72,31 +71,24 @@ TTree* outputTree = new TTree("miniTree", "Tree with structured event data");
 Event event;
 outputTree->Branch("event", &event);
 
-// // Event-level info
-// float out_Q2_e, out_x_e, out_y_e;
-
-// outputTree->Branch("Q2_e", &out_Q2_e, "Q2_e/F");
-// outputTree->Branch("x_e", &out_x_e, "x_e/F");
-// outputTree->Branch("y_e", &out_y_e, "y_e/F");
-
 //events
 tree_reader.SetEntriesRange(0, tree->GetEntries());
 //chain->GetEntries();
 while (tree_reader.Next()) {
 
-	// if(inclusive_Q2_value.GetSize()<=0) continue;
-	cout << "value " <<inclusive_Q2_value<<endl;
-	event.Q2_e = inclusive_Q2_value;
-  event.x_e = inclusive_x_value;
-  event.y_e = inclusive_y_value;
+	int numberOfChargedParticles=0;
   event.particles.clear();
   event.clusters.clear();
 
   for(int itrk=0;itrk<reco_pz_array.GetSize();itrk++){
   	Particle p;
   	p.px = reco_px_array[itrk];
+  	p.py = reco_py_array[itrk];
+  	p.pz = reco_pz_array[itrk];
     event.particles.push_back(p);
+    numberOfChargedParticles++;
   }
+  event.nParticles=numberOfChargedParticles;
 	
 	outputTree->Fill();
 }
