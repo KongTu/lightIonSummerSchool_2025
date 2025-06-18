@@ -84,9 +84,9 @@ tree_reader.SetEntriesRange(0, tree->GetEntries());
 //chain->GetEntries();
 while (tree_reader.Next()) {
 
-	event.Q2_e = inclusive_Q2_value;
-  event.x_e = inclusive_x_value;
-  event.y_e = inclusive_y_value;
+	event.Q2_e = inclusive_Q2_value[0];
+  event.x_e = inclusive_x_value[0];
+  event.y_e = inclusive_y_value[0];
   event.particles.clear();
   event.clusters.clear();
 	
