@@ -135,6 +135,16 @@ while (tree_reader.Next()) {
 	    event.clusters_eemc.push_back(cluster);
 	}
 
+	//ZDC
+  for(int iclus=0;iclus<zdc_energy_array.GetSize();iclus++){
+  		Cluster_ZDC cluster;
+			cluster.energy=zdc_energy_array[iclus];
+			cluster.x=zdc_x_array[iclus];
+			cluster.y=zdc_y_array[iclus];
+			cluster.z=zdc_z_array[iclus];
+	    event.clusters_zdc.push_back(cluster);
+	}
+
 	//RP
 	for(int ihit=0;ihit<rp_x_array.GetSize();ihit++){
   		Hit_RP hit;
