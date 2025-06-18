@@ -85,6 +85,7 @@ tree_reader.SetEntriesRange(0, tree->GetEntries());
 while (tree_reader.Next()) {
 
 	if(inclusive_Q2_value.GetSize()<=0) continue;
+	cout << "value " <<inclusive_Q2_value[0]<<endl;
 	event.Q2_e = inclusive_Q2_value[0];
   event.x_e = inclusive_x_value[0];
   event.y_e = inclusive_y_value[0];
