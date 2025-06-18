@@ -104,7 +104,7 @@ while (tree_reader.Next()) {
 
 	int numberOfChargedParticles=0;
 	int numberOfMCParticles=0;
-	event.mcp.Clear();
+	event.mcp.clear();
   event.particles.clear();
   event.clusters_eemc.clear();
   event.clusters_zdc.clear();
