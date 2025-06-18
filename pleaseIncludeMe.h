@@ -18,6 +18,12 @@
 #include "TLorentzRotation.h"
 #include "TVector2.h"
 #include "TVector3.h"
+#include <TVector.h>
+
+#include <cmath>
+#include "TF1.h"
+#include "TF2.h"
+#include "TSystem.h"
 
 #include "fmt/color.h"
 #include "fmt/core.h"
