@@ -77,7 +77,7 @@ while (tree_reader.Next()) {
 
 	int numberOfChargedParticles=0;
   event.particles.clear();
-  event.Cluster_EEMC.clear();
+  event.clusters_eemc.clear();
 
   for(int itrk=0;itrk<reco_pz_array.GetSize();itrk++){
   	Particle p;
