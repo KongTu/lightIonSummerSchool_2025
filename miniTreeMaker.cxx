@@ -9,18 +9,17 @@
 
 
 struct Particle {
-    Int_t pid;
-    float px, py, pz, energy;
+    float px, py, pz, charge;
 };
 
-struct Cluster {
-    float eta, phi, energy;
+struct Cluster_EEMC {
+    float x, y, energy;
 };
 
 struct Event {
     Int_t nParticles;
     std::vector<Particle> particles;
-    std::vector<Cluster> clusters;
+    std::vector<Cluster_EEMC> clusters_eemc;
 };
 
 int miniTreeMaker(TString rec_file, TString outputfile)
@@ -78,18 +77,28 @@ while (tree_reader.Next()) {
 
 	int numberOfChargedParticles=0;
   event.particles.clear();
-  event.clusters.clear();
+  event.Cluster_EEMC.clear();
 
   for(int itrk=0;itrk<reco_pz_array.GetSize();itrk++){
   	Particle p;
   	p.px = reco_px_array[itrk];
   	p.py = reco_py_array[itrk];
   	p.pz = reco_pz_array[itrk];
+  	p.charge = reco_charge_array[itrk];
     event.particles.push_back(p);
     numberOfChargedParticles++;
   }
+
+  for(int iclus=0;iclus<em_energy_array.GetSize();iclus++){
+  		Cluster_EEMC cluster;
+			cluster.energy=em_energy_array[iclus];
+			cluster.x=em_x_array[iclus];
+			cluster.y=em_y_array[iclus];
+	    event.clusters_eemc.push_back(cluster);
+	}
+
+
   event.nParticles=numberOfChargedParticles;
-	
 	outputTree->Fill();
 }
 
