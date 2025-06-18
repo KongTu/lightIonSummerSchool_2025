@@ -8,16 +8,16 @@
 
 struct Particle {
     Int_t pid;
-    Float_t px, py, pz, energy;
+    float px, py, pz, energy;
 };
 
 struct Cluster {
-    Float_t eta, phi, energy;
+    float eta, phi, energy;
 };
 
 struct Event {
     Int_t event_id;
-    Float_t Q2_e, x_e, y_e;
+    float Q2_e, x_e, y_e;
     std::vector<Particle> particles;
     std::vector<Cluster> clusters;
 };
