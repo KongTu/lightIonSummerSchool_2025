@@ -1,5 +1,9 @@
 # lightIonSummerSchool_2025
 
+Get the repo:
+```git clone https://github.com/KongTu/lightIonSummerSchool_2025.git```
+```cd lightIonSummerSchool_2025```
+
 ## Setting up the environment
 
 Fresh start with an eic_shell, if one hasn't done it yet:
@@ -9,7 +13,6 @@ wget --output-document install.sh http://get.epic-eic.org --no-check-certificate
 	
 bash install.sh
 ```
-
 Run it:
 
 ```./eic-shell```
