@@ -1,6 +1,9 @@
 # lightIonSummerSchool_2025
 
+## Instructions to run miniTreeMaker with EICrecon as input:
+
 Get the repo:
+
 ```git clone https://github.com/KongTu/lightIonSummerSchool_2025.git```
 
 ```cd lightIonSummerSchool_2025```
@@ -25,7 +28,7 @@ First argument is inputfile, second argument is outputfile, third argument is 1:
 ```./run.sh root://dtn-eic.jlab.org//volatile/eic/EPIC/RECO/main/epic_craterlake/Test/Tutorials_June2025/EXCLUSIVE/DIFFRACTIVE_PHI_ABCONV/sartre1.39-1.0/eCa/coherent/bsat/18x137.5/q2_1to10/sartre1.39-1.0_coherent_phi_eCa_bsat_18x137.5_q2_1to10_ab.\*.eicrecon.edm4eic.root sartre_MiniTree_1M 1```
 
 
-## Same instruction as to students:
+##instruction to run analysis (as the same to summer school students):
 
 ## Introduction
 
@@ -48,6 +51,12 @@ Pre-requisite:
 
 ### Download the pseudo data from google drive:
 https://drive.google.com/file/d/1ofgtVJOQZuD-fsEqRfIrLZhoGxKIj9dp/view?usp=sharing
+
+### Running the macros (in order):
+
+``` root -l analyze.C+```
+
+``` root -l getImage.C```
 
 ### Understanding the tree
 
