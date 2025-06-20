@@ -39,6 +39,12 @@ struct Event {
     std::vector<Hit_OMD> hit_omd;
 };
 
+double giveme_t_method_E(TLorentzVector eIn, TLorentzVector eOut, TLorentzVector pIn, TLorentzVector vmOut)
+{
+    double method_E = -(eIn-eOut-vmOut).Mag2();
+    return method_E;
+}
+
 double giveme_t_method_L(TLorentzVector eIn, TLorentzVector eOut, TLorentzVector pIn, TLorentzVector vmOut)
 {
     TLorentzVector aInVec(pIn.Px(),pIn.Py(),pIn.Pz(),sqrt(pIn.Px()*pIn.Px() + pIn.Py()*pIn.Py() + pIn.Pz()*pIn.Pz() + MASS_PROTON*MASS_PROTON) );
