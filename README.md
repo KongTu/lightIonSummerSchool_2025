@@ -2,6 +2,7 @@
 
 Get the repo:
 ```git clone https://github.com/KongTu/lightIonSummerSchool_2025.git```
+
 ```cd lightIonSummerSchool_2025```
 
 ## Setting up the environment
