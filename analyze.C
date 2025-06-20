@@ -1,19 +1,6 @@
 
 #include "analyze.h"
-double giveme_t_method_L(TLorentzVector eIn, TLorentzVector eOut, TLorentzVector pIn, TLorentzVector vmOut)
-{
-    //MASS_Ca40 = 37.2 GeV
-	TLorentzVector aInVec(pIn.Px()*40,pIn.Py()*40,pIn.Pz()*40,sqrt(pIn.Px()*40*pIn.Px()*40 + pIn.Py()*40*pIn.Py()*40 + pIn.Pz()*40*pIn.Pz()*40 + 37.2*37.2) );
-	double method_L = 0;
-	TLorentzVector a_beam_scattered = aInVec-(vmOut+eOut-eIn);
-	double p_Aplus = a_beam_scattered.E()+a_beam_scattered.Pz();
-	double p_TAsquared = TMath::Power(a_beam_scattered.Pt(),2);
-	double p_Aminus = (37.2*37.2 + p_TAsquared) / p_Aplus;
-	TLorentzVector a_beam_scattered_corr; 
-	a_beam_scattered_corr.SetPxPyPzE(a_beam_scattered.Px(),a_beam_scattered.Py(),(p_Aplus-p_Aminus)/2., (p_Aplus+p_Aminus)/2. );
-	method_L = -(a_beam_scattered_corr-aInVec).Mag2();
-	return method_L;
-}
+
 void analyze(){
 
 	//input file
@@ -173,18 +160,17 @@ void analyze(){
 		double EpzREC= (hfs_e-elec_trk+escat_REC).E() - (hfs_e-elec_trk+escat_REC).Pz();
 		h_Epz_REC->Fill( EpzREC );
 
-		TLorentzVector pbeam(0,0,137.5,137.5);
 		TLorentzVector qbeamREC=eIn-escat_REC;
 		double Q2REC=-(qbeamREC).Mag2();  
-		double pqREC=pbeam.Dot(qbeamREC);
-		double yREC= pqREC/pbeam.Dot(eIn);
+		double pqREC=aIn.Dot(qbeamREC);
+		double yREC= pqREC/aIn.Dot(eIn);
 		// 	double sigma=(hfs_e-elec_trk).E()-(hfs_e-elec_trk).Pz();
 		// 	double cosTheta=TMath::Cos(escat_REC.Theta());
 		// double yREC_sigma = sigma/(sigma+escat_REC.E()*(1-cosTheta));
 		// yREC=yREC_sigma;
 
 		//Event selection:
-		if( EpzREC<27||EpzREC>40 ) continue;
+		if( EpzREC<32||EpzREC>38 ) continue;
 		if( EoverP<0.8||EoverP>1.16 ) continue;		
 
 		h_Q2REC_e->Fill(Q2REC);
